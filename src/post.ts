@@ -62,7 +62,7 @@ export const post = (collection: string, entry: Entry, options?: PostOptions): P
           try {
             json = JSON.parse(responseText)
           } catch (error) {
-            if (statusCode ?? 0 >= 400) {
+            if (statusCode >= 400) {
               reject(new Error(fallbackErrorReason))
             } else {
               reject(error)
