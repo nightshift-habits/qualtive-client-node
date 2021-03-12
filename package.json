@@ -1,0 +1,39 @@
+{
+  "name": "qualtive-node",
+  "version": "1.0.0",
+  "description": "Client library for Qualtive.",
+  "author": "Qualtive",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "eslint . --ext .js,.ts",
+    "test": "jest --coverage",
+    "build": "rm -rf dist && tsc -p tsconfig.prod.json",
+    "package": "npm run build && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nightshift-habits/qualtive-client-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nightshift-habits/qualtive-client-node/issues"
+  },
+  "homepage": "https://github.com/nightshift-habits/qualtive-client-node#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^26.0.7",
+    "@typescript-eslint/eslint-plugin": "^3.7.1",
+    "@typescript-eslint/parser": "^3.7.1",
+    "eslint": "^7.21.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.1.0",
+    "prettier": "^2.0.5",
+    "ts-jest": "^26.5.3",
+    "typescript": "^3.9.7",
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4"
+  }
+}
