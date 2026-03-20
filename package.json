@@ -8,6 +8,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "lint": "eslint . --ext .js,.ts",
+    "format": "prettier --write .",
     "test": "jest --coverage",
     "build": "rm -rf dist && tsc -p tsconfig.prod.json",
     "package": "npm run build && npm publish"
