@@ -1,3 +1,5 @@
+import https from "https"
+import { EventEmitter } from "events"
 import { post, Entry } from "./"
 
 describe("post", () => {
@@ -59,5 +61,44 @@ describe("post", () => {
       return
     }
     fail("did not throw error")
+  })
+
+  describe("pass-through key", () => {
+    const sentHeaders = async (passThroughKey?: string | null) => {
+      let headers: Record<string, string> = {}
+      const spy = jest.spyOn(https, "request").mockImplementation((((
+        requestOptions: https.RequestOptions,
+        callback: (response: EventEmitter & { statusCode: number }) => void
+      ) => {
+        headers = requestOptions.headers as Record<string, string>
+        const response = Object.assign(new EventEmitter(), { statusCode: 201 })
+        const request = Object.assign(new EventEmitter(), {
+          write: jest.fn(),
+          end: () => {
+            callback(response)
+            response.emit("data", '{"id":1}')
+            response.emit("end")
+          },
+        })
+        return request
+      }) as unknown) as typeof https.request)
+      try {
+        await post(validCollection, validEntry, { passThroughKey })
+      } finally {
+        spy.mockRestore()
+      }
+      return headers
+    }
+
+    it("should send the pass-through key header", async () => {
+      const headers = await sentHeaders("pt-secret")
+      expect(headers["X-Qualtive-Pass-Through"]).toBe("pt-secret")
+      expect(headers["X-Container"]).toBe("ci-test")
+    })
+
+    it("should omit the header without a pass-through key", async () => {
+      expect(await sentHeaders()).not.toHaveProperty("X-Qualtive-Pass-Through")
+      expect(await sentHeaders(null)).not.toHaveProperty("X-Qualtive-Pass-Through")
+    })
   })
 })

@@ -50,6 +50,7 @@ export const post = (collection: string, entry: Entry, options?: PostOptions): P
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           "X-Container": containerId,
+          ...(options?.passThroughKey ? { "X-Qualtive-Pass-Through": options.passThroughKey } : {}),
         },
       },
       (response) => {

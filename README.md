@@ -67,3 +67,26 @@ qualtive.post("my-company/my-question", {
   },
 })
 ```
+
+### Pass-through keys
+
+The User API limits how many entries can be posted from the same IP address. If you post feedback on behalf of many users from your own servers, create a pass-through key under Settings > API Keys on [qualtive.io](https://qualtive.io) and pass it as an option:
+
+```typescript
+import * as qualtive from "qualtive-node"
+
+qualtive.post(
+  "my-company/my-question",
+  {
+    score: 75,
+    user: {
+      clientId: "34851e75-de80-4f5b-9dbe-89dbd8295089",
+    },
+  },
+  {
+    passThroughKey: process.env.QUALTIVE_PASS_THROUGH_KEY,
+  }
+)
+```
+
+Pass-through keys are secrets. Only use them server-side and never expose them to browsers or apps.

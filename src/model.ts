@@ -98,6 +98,12 @@ export type EntryReference = {
  */
 export type PostOptions = {
   /**
+   * Pass-through key created under Settings > API Keys. Lifts the per-IP rate limit for server-to-server integrations.
+   * Never expose this key to browsers or apps. Optional.
+   */
+  passThroughKey?: string | null
+
+  /**
    * The remote host to post feedback to. Must not include scheme. For debug usages only.
    */
   _remoteHost?: string | null
